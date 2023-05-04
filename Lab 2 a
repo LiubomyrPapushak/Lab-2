@@ -1,0 +1,59 @@
+using System;
+
+namespace Lab_2_2b
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double a, b, dx;
+            Console.Write("\nВведiть значення початку дiапазону обрахунку a=");
+            string T1 = Console.ReadLine();
+            a = double.Parse(T1);
+            Console.Write("Введiть значення кiнця дiапазону обрахунку b=");
+            string T2 = Console.ReadLine();
+            b = double.Parse(T2);
+            Console.Write("Введiть значення кроку для проведення обрахунку dx=");
+            string T3 = Console.ReadLine();
+            dx = double.Parse(T3);
+            while (dx <= 0 || ((b - a) / dx) < 2) //перед-умова
+            {
+                if ((b - a) / dx < 2)
+                {
+                    Console.WriteLine($"\n Введений Вами дiапазон [а={a:f2}; b={b:f2}] та крок dx = {dx:f2} " +
+                        $"\n не дозволяють отримати декiлькох значень Х. \n При цьому обрахунок не має сенсу \n Задайте iншi числа \n");
+                    Console.Write("\nВведiть значення початку дiапазону обрахунку a=");
+                    T1 = Console.ReadLine();
+                    a = double.Parse(T1);
+                    Console.Write("Введiть значення кiнця дiапазону обрахунку b=");
+                    T2 = Console.ReadLine();
+                    b = double.Parse(T2);
+                    Console.Write("Введiть значення кроку для проведення обрахунку dx=");
+                    T3 = Console.ReadLine();
+                    dx = double.Parse(T3);
+                }
+            }
+            Console.Clear();
+            Console.WriteLine($"\t  Результати обчислення функцiї y=ctg(x)-2sin(x)\n\tна промiжку [{a:f2}; {b:f2}] та з кроком dx = {dx:f2}");
+            Console.WriteLine(" _________________________________________________________");
+            Console.WriteLine(" | \t Значення x \t | \t Значення у = f(x) \t |");
+            for (double x = a; x <= b; x = x + dx)
+            {
+                if (x != x * Math.PI)
+                {
+                    double y = Math.Tan(x) - 2 * Math.Sin(x);
+                    Console.WriteLine(" |-----------------------|-------------------------------|");
+                    Console.WriteLine($" | \t {x:f2} \t \t | \t {y:f2} \t \t ");
+                }
+                else
+                {
+                    Console.WriteLine(" |-----------------------|-------------------------------|");
+                    Console.WriteLine($" | \t {x:f2} \t \t |    Помилка! Невизначене значення тангенса ");
+                }
+            }
+            Console.WriteLine(" |-----------------------|-------------------------------|");
+            Console.ReadLine();
+        }
+    }
+}
+
