@@ -1,0 +1,101 @@
+using System;
+
+namespace Lab_2_3
+{
+    public class Program
+    {
+        public static void ArgInput(int[] A, int n)//Введення елементів вектору
+        {
+            Console.Write("r = рандом  h - ручни ввiд\nВиберiть метод запису чисел у вектор: ");
+            string choise = Console.ReadLine();
+            Console.Clear();
+            bool end = false;
+            while (!end)
+            {
+                switch (choise)
+                {
+                    case "h":
+                        Console.WriteLine($"\n Введiть елементи вектора A[{n}]");
+                        for (int i = 0; i < A.Length; ++i)
+                        {
+                            Console.Write($"\n \t A[{i + 1}]=");
+                            string TA = Console.ReadLine();
+                            A[i] = int.Parse(TA);
+                        }
+                        end = true;
+                        break;
+                    case "r":
+                        Random rand = new Random();
+                        for (int i = 0; i < A.Length; ++i)
+                        {
+                            A[i] = rand.Next(-100, 100);
+                        }
+                        end = true;
+                        break;
+                    default: Console.WriteLine("Введена невiрна буква"); break;
+                }
+            }
+        }
+        public static int PlusNums(int[] A)
+        {
+            int count = 0;
+            foreach (int elem in A)
+            {
+                if (elem >= 0)
+                    count++;
+            }
+            return count;
+        }
+        public static int DobutokElem(int[] A, int size)
+        {
+            int num = A[0];
+            int dobutok = 1;
+            foreach (int elem in A)
+            {
+                if (Math.Abs(num) > Math.Abs(elem))
+                    num = elem;
+            }
+            Console.WriteLine($"2 Мiнiмальний елемент вектору за модулем min={num}");
+            int imax = Array.IndexOf(A, num);
+            for (int i = 0; i < size; i++)
+            {
+                if (A[i] != num)
+                    dobutok *= A[i];
+                else if (i == 0)
+                {
+                    dobutok *= A[i];
+                    break;
+                }
+                else
+                    break;
+            }
+
+            return dobutok;
+        }
+        static void Main(string[] args)
+        {
+            int n;
+            Console.Write("\n Введiть кiлькiсть елементiв вектора N=");
+            string TN = Console.ReadLine();
+            n = int.Parse(TN);
+            int[] A = new int[n];
+            ArgInput(A, n);
+            //Виведення результатiв
+            Console.Clear();
+            Console.Write("\n Ви задали вектор A[" + $"{n}" + "]={");
+            foreach (int elem in A)
+                Console.Write($"{elem}" + ", ");
+            Console.WriteLine("\b\b}\n");
+            int plus = PlusNums(A);
+            if (plus != 0) Console.WriteLine($"1 Кiлькiсть додатнiх елементiв дорiвнює {plus}\n");
+            else Console.WriteLine("1 Додатнi елементи вiдсутнi\n");
+
+            int dob = DobutokElem(A, n);
+            if (dob != 1) Console.WriteLine($" Добуток елементiв до мiнiмального елементу за модулем дорiвнює {dob}");
+            else Console.WriteLine(" Мінімальний елемен за модулем в початку вектору"); ;
+            Console.ReadLine();
+
+
+        }
+    }
+}
