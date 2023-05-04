@@ -1,0 +1,133 @@
+using System;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        public static void ArgInput(int[,] A, int n, int m)//Введення елементів масиву
+        {
+
+            Console.Write("r = рандом  h - ручни ввiд\nВиберiть метод запису чисел у вектор: ");
+            string choise = Console.ReadLine();
+            Console.Clear();
+            bool end = false;
+            while (!end)
+            {
+                switch (choise)
+                {
+                    case "h":
+                        Console.WriteLine($"\n Введiть елементи масива A[{n}, {m}]:");
+                        for (int i = 0; i < n; ++i)
+                        {
+                            for (int j = 0; j < m; ++j)
+                            {
+                                Console.Write($"\t A[{i + 1}, {j + 1}]=");
+                                string TA = Console.ReadLine();
+                                A[i, j] = int.Parse(TA);
+                            }
+                        }
+                        end = true;
+                        break;
+                    case "r":
+                        Random rand = new Random();
+                        for (int i = 0; i < n; ++i)
+                        {
+                            for (int j = 0; j < m; ++j)
+                            {
+                                A[i, j] = rand.Next(-100, 100);
+                            }
+                        }
+                        end = true;
+                        break;
+                    default: Console.WriteLine("Введена невiрна буква"); break;
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            int n, m;
+            Console.Write("\n Введiть кiлькiсть рядкiв в двовимiрному масивi n=");
+            string N = Console.ReadLine();
+            n = int.Parse(N);
+            Console.Write("\n Введiть кiлькiсть стовпцiв в двовимiрному масивi m=");
+            string M = Console.ReadLine();
+            m = int.Parse(M);
+            int[,] A = new int[n, m];
+            ArgInput(A, n, m);
+            int[] B = new int[n];
+            Console.WriteLine($"\n Ви задали масив A[{n}, {m}]:\n");
+            for (int i = 0; i < n; ++i)
+            {
+                Console.Write("\t|");
+                for (int j = 0; j < m; ++j)
+                {
+
+                    Console.Write($"{A[i, j]}\t");
+                }
+                Console.WriteLine("\b\b\b\b\b\b\b|\n");
+            }
+            int min = A[0, 0];// перший мiнiмальний елмент
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (A[i, j] < min)
+                    {
+                        min = A[i, j];
+                    }
+                }
+            }
+            int min2 = int.MaxValue;// другий мiнiмальний елмент
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < m; j++)
+                {
+                    if (A[i, j] < min2 && A[i, j] != min)
+                    {
+                        min2 = A[i, j];
+                    }
+                }
+            }
+            if (min == 0)
+            {
+                for (int i = 0; i < A.GetLength(0); i++)
+                {
+                    for (int j = 0; j < A.GetLength(1); j++)
+                    {
+                        if (A[i, j] == min || A[i, j] == min2)
+                        {
+                            A[i, j] = 1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < A.GetLength(0); i++)
+                {
+                    for (int j = 0; j < A.GetLength(1); j++)
+                    {
+                        if (A[i, j] == min || A[i, j] == min2)
+                        {
+                            A[i, j] = 0;
+                        }
+                    }
+                }
+            }
+            Console.Write("\n Отриманий вектор з замiною мiнiмальних елментiв:\n ");
+            for (int i = 0; i < n; ++i)
+            {
+                Console.Write("\t|");
+                for (int j = 0; j < m; ++j)
+                {
+
+                    Console.Write($"{A[i, j]}\t");
+                }
+                Console.WriteLine("\b\b\b\b\b\b\b|\n");
+            }
+            Console.ReadLine();
+        }
+
+    }
+}
+
